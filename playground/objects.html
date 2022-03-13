@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+
+<input type="text" name="first" id="nameinput" value="ben">
+
+
+  <script>
+const person = {
+  name: 'wes',
+  'cool': true,
+  hobbs: {
+    coding: true,
+    guitar: true,
+    techBlog: false,
+  },
+
+  sayHello: function(greeting = "hey") {
+return console.log(`${greeting} ${this.name}`);
+  },
+
+}
+//console.log(person['name'])
+
+const nameInput = document.querySelector('[name = "first"]')
+
+if (nameInput) {
+  const name = nameInput.value;  
+  console.log(name)
+}
+
+// console.log(person.sayHello('iojuhgcv'))
+
+let name1 = "ben"
+let name2 = 'nate'
+
+
+const meatInventory = {
+      bacon: 2,
+      sausage: 3,
+  
+    };
+
+    const veggieInventory = {
+      lettuce: 5,
+      tomatoes: 3,
+ 
+    };
+
+    const inventory = {...meatInventory, ...veggieInventory}
+
+    function doOrDoNot(data) {
+      data = 'something'
+    console.log(data)
+    }
+
+  </script>
+</body>
+
+</html>

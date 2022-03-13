@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Async Await</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body>
+    <script>
+      function wait(ms = 0) {
+        return new Promise(function(resolve) {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      function makePizza(toppings = []) {
+        const pizzaPromise = new Promise(function(resolve, reject) {
+          // reject if people try to put pineapple
+          if (toppings.includes("pineapple")) {
+            reject("yo for reals bro🍍");
+          }
+          // when ready, resolve the pizza
+          const amountOfTimeToBake = 500 + toppings.length * 200;
+          setTimeout(() => {
+            resolve(
+              `Here is your pizza 🍕 with the toppings of ${toppings.join(
+                ", "
+              )}`
+            );
+          }, amountOfTimeToBake);
+
+          // if something goes wrong, reject the promise
+        });
+        return pizzaPromise;
+      }
+
+      async function makeDinner() {
+        const pizzaPromise1 = await makePizza(['peperoni'])
+        const pizzaPromise2 = await makePizza(['mushrooms'])
+        const [peperoni, mushrooms] = await Promise.all([pizzaPromise1, pizzaPromise2])
+       
+      }
+
+      makeDinner()
+
+      async function go() {
+        console.log("starting");
+        await wait(2000);
+        console.log("running");
+        await wait(2000);
+        console.log("ending");
+      }
+
+      // go();
+
+      async function fd() {
+        console.log("async FD");
+      }
+
+      const arrowFn = async () => {};
+
+      window.addEventListener("click", async function() {});
+
+      const person = {
+        // async regular method declaration
+        sayHi: async function() {},
+        // async shorcut method declartion
+        async sayHello() {},
+        sayHey: async () => {},
+      };
+    </script>
+  </body>
+</html>

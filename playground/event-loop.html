@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Event Loop</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <style>
+    .go {
+      background-color: aliceblue;
+      padding: 100px;
+    }
+
+    .circle {
+      border-radius: 80%;
+    }
+
+    .go.red {
+      background-color: red;
+    }
+
+    .go.purple {
+      color: white;
+      background-color: purple;
+    }
+
+    .go.fadeOut {
+      opacity: 0;
+    }
+  </style>
+
+  <body>
+    <div class="go">Click ne</div>
+  </body>
+  <script>
+    const goDiv = document.querySelector(".go");
+    function go() {
+      goDiv.textContent = "go";
+      setTimeout(() => {
+        goDiv.classList.add("circle");
+        setTimeout(() => {
+          goDiv.classList.add("red");
+          setTimeout(() => {
+            goDiv.classList.remove("circle");
+            setTimeout(() => {
+              goDiv.classList.remove("red");
+              goDiv.classList.add("purple");
+              setTimeout(() => {
+                goDiv.classList.add("fadeOut");
+              }, 500);
+            }, 300);
+          }, 250);
+        }, 500);
+      }, 2000);
+    }
+
+    goDiv.addEventListener("click", go);
+  </script>
+</html>

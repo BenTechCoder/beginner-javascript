@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>New, This, Prototypes and Classes</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body>
+    <button class="one">Button 1</button>
+    <button class="two">Button 2</button>
+  </body>
+  <script>
+    const myDate = new Date("August 11, 2025");
+    console.log(myDate.getFullYear());
+
+    const names = ["wes", "ben"];
+    const span = document.createElement("span");
+    console.log(span instanceof Element);
+
+    String.prototype.sarcastic = function() {
+      const sarcastic = this.split("").map((char, i) => {
+        if (i % 2) {
+          return char.toUpperCase;
+        } else {
+          return char.toLowerCase;
+        }
+        return sarcastic;
+      });
+    };
+
+    function Pizza(toppings = [], customer) {
+      console.log("azaaaaaa");
+      this.toppings = toppings;
+      this.customer = customer;
+      this.id = Math.floor(Math.random() * 16777215).toString(16);
+      this.slices = 10;
+      //    this.eat = function () {
+      //     if (this.slices > 0) {
+      //       this.slices -= this.slices;
+      //       return this.slices;
+      //     } else {
+      //       console.log("sorry no mas")
+      //     }
+
+      //    }
+    }
+
+    Pizza.prototype.eat = function() {
+      if (this.slices > 0) {
+        this.slices -= 1;
+        console.log(`you have ${this.slices} left`);
+        return this.slices;
+      } else {
+        console.log("sorry no mas");
+      }
+    };
+
+    Pizza.prototype.describe = function name(params) {
+      /* tell this pizza is for the customer name, list toppings, 
+      and how many slices are left 
+      */
+     const description =  `This pizza is for ${this.customer}, toppings are: ${this.toppings} and it has ${this.slices} slices left`
+     console.log(description)
+     return description;
+    }
+
+    const pepperoniPizza = new Pizza(["pepperoni"], "Ben");
+    const canadianPizza = new Pizza(["pepperoni", "mushrooms"], "Wes Bos");
+    console.log(pepperoniPizza);
+    console.log(canadianPizza);
+
+    const button1 = document.querySelector(".one");
+    const button2 = document.querySelector(".two");
+
+    // function tellMe() {
+    //   console.log(this);
+    //   setTimeout(() => {
+    //     this.textContent = "you have";
+    //   }, 100)
+    // }
+
+    // button1.addEventListener("click", tellMe);
+
+    // button2.addEventListener("click", tellMe);
+  </script>
+</html>

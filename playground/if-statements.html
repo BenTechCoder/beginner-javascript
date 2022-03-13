@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>If Statements</title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+  <script>
+    if (10 > 2) {
+      console.log('Yep');
+    } else if (11 > 3) {
+      console.log('yuppers')
+    }
+
+    
+    function slugify(sentence, lowercase) {
+      let slug = sentence.replace(/\s/g, '-');
+      if (lowercase) {
+        return slug.toLowerCase();
+      }
+      return slug;
+    }
+    const name = 'sco'
+
+    if ('scott'.includes(name)) {
+      console.log('yhglfrjevkudihjwj')
+    }
+
+    console.clear();
+
+    // terenary
+/*
+1.A condition
+2. what to do if true
+3. what to do if false
+*/
+const count = 2
+let word = count===1 ? 'item': 'items';
+
+
+const sentence = `you have ${count} ${word} in your cart`;
+
+
+
+  </script>
+</body>
+
+</html>

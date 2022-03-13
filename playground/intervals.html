@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Intervals and Timers</title>
+  <link rel="stylesheet" href="../base.css">
+</head>
+
+<body>
+<script>
+
+  const buzzer = () => console.log('opiwjenf');
+  setTimeout(buzzer, 500);
+  setImmediateInterval(buzzer, 500);
+
+  function setImmediateInterval(func, ms) {
+    func();
+    return setInterval(func, ms);
+  }
+
+
+</script>
+</body>
+
+</html>

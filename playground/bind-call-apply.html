@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Bind Call and Apply!</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body>
+    <h1>select me</h1>
+  </body>
+  <script>
+    const person = {
+      name: "Ben Lebron",
+      sayHi() {
+        console.log(`hey ${this.name}`);
+        return `hey ${this.name}`;
+      },
+    };
+
+    const jenna = { name: "jenna" };
+    const sayHi = person.sayHi.bind(jenna);
+    const $ = document.querySelector.bind(document);
+    const hero = $("h1");
+    console.log(hero);
+
+    const bill = {
+      total: 1000,
+      calculate(taxrate) {
+      return this.total + (this.total * taxrate);
+      },
+      describe(mealType, drinkType, taxRate) {
+     return `Meal was ${mealType}, drink was ${drinkType}, with a total bill of ${this.calculate(taxRate)} `
+      }
+    }
+
+    console.log(bill.calculate(0.13))
+  const calc = bill.calculate.bind({total:100}, 0.10)
+  console.log(calc())
+  const total2 = bill.calculate.call({total:100}, 0.10)
+  console.log(total2)
+  const total3 = bill.calculate.apply({total:100}, 0.10)
+
+  const myMeal = bill.describe.call(bill, 'pizzaa', 'wine', 0.12)
+  const myMeal2 = bill.describe.call(bill, ['pizzaa', 'wine', 0.12])
+  </script>
+</html>

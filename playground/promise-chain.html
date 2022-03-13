@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Event Loop</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <style>
+    .go {
+      background-color: aliceblue;
+      padding: 100px;
+    }
+
+    .circle {
+      border-radius: 80%;
+    }
+
+    .go.red {
+      background-color: red;
+    }
+
+    .go.purple {
+      color: white;
+      background-color: purple;
+    }
+
+    .go.fadeOut {
+      opacity: 0;
+    }
+  </style>
+
+  <body>
+    <div class="go">Click ne</div>
+  </body>
+  <script>
+    function wait(ms = 0) {
+      return new Promise(function(resolve) {
+        setTimeout(resolve, ms);
+      });
+    }
+
+   async function animate2(e) {
+      const el = e.currentTarget;
+      el.textContent = "GO";
+     await wait(200)
+        el.classList.add("circle");
+        await wait(500)
+            el.classList.add("red");
+            await wait(250)
+            el.classList.remove("circle");
+            await wait(500);
+            el.classList.remove("red");
+            el.classList.add("purple");
+            await wait(500);
+            el.classList.add("fadeOut");
+    }
+
+    function animate(e) {
+      const el = e.currentTarget;
+      el.textContent = "GO";
+      wait(200).then(() => {
+        el.classList.add("circle");
+        return wait(500)
+          .then(() => {
+            el.classList.add("red");
+            return wait(250);
+          })
+          .then(() => {
+            el.classList.remove("circle");
+            return wait(500);
+          })
+          .then(() => {
+            el.classList.remove("red");
+            el.classList.add("purple");
+            return wait(500);
+          })
+          .then(() => {
+            el.classList.add("fadeOut");
+          });
+      });
+    }
+    const goDiv = document.querySelector(".go");
+    goDiv.addEventListener("click", animate2);
+  </script>
+</html>

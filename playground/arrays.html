@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title> </title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body></body>
+
+  <script>
+    const names = ["wes", "ben", "blue"];
+    names.push("lux");
+    const names2 = [...names, "lux"];
+    const bikes = ["bianchi", "miele", "panasonic", "miyata"];
+
+    const newBikes = [...bikes.slice(0, 2), "bennoto", ...bikes.slice(2)];
+
+    //
+    const comments = [
+      { text: "Cool Beans", id: 123 },
+      { text: "Love this", id: 133 },
+      { text: "Neato", id: 233 },
+      { text: "good bikes", id: 333 },
+      { text: "so good", id: 433 },
+    ];
+
+    function deleteComments(id, comments) {
+      const commentIndex = comments.findIndex(comment => comment.id === id)
+      return [
+        ...comments.slice(0, commentIndex),
+        ...commentIndex.slice(commentIndex + 1)
+      ]
+    }
+
+    const benIndex = names.findIndex(name => name === 'ben')
+
+    const namesWithoutBen = [
+  ...names.slice(0, benIndex),
+  ...names.slice(benIndex + 1)
+  ]
+
+
+
+
+
+  </script>
+</html>

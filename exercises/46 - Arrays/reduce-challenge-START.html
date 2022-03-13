@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Reduce!</title>
+    <link rel="stylesheet" href="../../base.css" />
+  </head>
+
+  <body>
+    <script>
+      // Grab all the text from a web page
+      // Count how many times each letter and number occurs
+
+      const originalText = `
+    Skip to main content
+Skip to search
+Skip to select language
+Technologies
+References & Guides
+Feedback
+Search MDN
+Site search... (Press "/" to focus)
+Web technology for developers
+SVG: Scalable Vector Graphics
+SVG Tutorial
+Filter effects
+Change language
+Table of contents
+Example
+Filter effects
+« Previous
+Next »
+There are situations, where basic shapes do not provide the flexibility you need to achieve a certain effect. Drop shadows, to provide a popular example, cannot be created reasonably with a combination of gradients. Filters are SVG's mechanism to create sophisticated effects.
+
+A basic example is to add a blur effect to SVG content. While basic blurs can be achieved with the help of gradients, the blur filter is needed to do anything beyond.
+
+Example
+Filters are defined by <filter> element, which should be put in the <defs> section of your SVG file. Between the filter tags, goes a list of primitives, basic operations that build on top of the previous operations (like blurring, adding a lighting effect, etc). To apply your created filter on a graphic element, you set the filter attribute.
+
+<svg width="250" viewBox="0 0 200 85"
+     xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <!-- Filter declaration -->
+    <filter id="MyFilter" filterUnits="userSpaceOnUse"
+            x="0" y="0"
+            width="200" height="120">
+
+      <!-- offsetBlur -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+      <feOffset in="blur" dx="4" dy="4" result="offsetBlur"/>
+
+      <!-- litPaint -->
+      <feSpecularLighting in="blur" surfaceScale="5" specularConstant=".75"
+                          specularExponent="20" lighting-color="#bbbbbb"
+                          result="specOut">
+        <fePointLight x="-5000" y="-10000" z="20000"/>
+      </feSpecularLighting>
+      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+      <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic"
+                   k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+
+      <!-- merge offsetBlur + litPaint -->
+      <feMerge>
+        <feMergeNode in="offsetBlur"/>
+        <feMergeNode in="litPaint"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Graphic elements -->
+  <g filter="url(#MyFilter)">
+      <path fill="none" stroke="#D90000" stroke-width="10"
+            d="M50,66 c-50,0 -50,-60 0,-60 h100 c50,0 50,60 0,60z" />
+      <path fill="#D90000"
+            d="M60,56 c-30,0 -30,-40 0,-40 h80 c30,0 30,40 0,40z" />
+      <g fill="#FFFFFF" stroke="black" font-size="45" font-family="Verdana" >
+        <text x="52" y="52">SVG</text>
+      </g>
+  </g>
+</svg>
+Copy to Clipboard
+
+Step 1
+<feGaussianBlur in="SourceAlpha"
+                stdDeviation="4"
+                result="blur"/>
+Copy to Clipboard
+<feGaussianBlur> takes in "SourceAlpha", which is the alpha channel of the source graphic, applies a blur of 4, and stores the result in a temporary buffer named "blur".
+
+Step 2
+<feOffset in="blur"
+          dx="4" dy="4"
+          result="offsetBlur"/>
+Copy to Clipboard
+<feOffset> takes in "blur", which we previously created, shifts the result 4 to the right and 4 to the bottom, and stores the result in the buffer "offsetBlur". The two first primitives just created a drop shadow.
+
+Step 3
+<feSpecularLighting in="offsetBlur"
+                    surfaceScale="5" specularConstant=".75"
+                    specularExponent="20" lighting-color="#bbbbbb"
+                    result="specOut">
+  <fePointLight x="-5000" y="-10000" z="20000"/>
+</feSpecularLighting>
+Copy to Clipboard
+<feSpecularLighting> takes in "offsetBlur", generates a lighting effect, and stores the result in the buffer "specOut".
+
+Step 4
+<feComposite in="specOut" in2="SourceAlpha"
+             operator="in"
+             result="specOut"/>
+Copy to Clipboard
+The first <feComposite> takes in "specOut" and "SourceAlpha", masks out the result of "specOut" so that the result is not bigger than "SourceAlpha" (the original source graphic), and overrides the result "specOut".
+
+Step 5
+<feComposite in="SourceGraphic" in2="specOut"
+             operator="arithmetic"
+             k1="0" k2="1" k3="1" k4="0"
+             result="litPaint"/>
+Copy to Clipboard
+The second <feComposite> takes in "SourceGraphic" and "specOut", adds the result of "specOut" on top of "SourceGraphic", and stores the result in "litPaint".
+
+Step 6
+<feMerge>
+  <feMergeNode in="offsetBlur"/>
+  <feMergeNode in="litPaint"/>
+</feMerge>
+Copy to Clipboard
+Finally, <feMerge> merges together "offsetBlur", which is the drop shadow, and "litPaint", which is the original source graphic with a lighting effect.
+
+Source graphic
+
+Source graphic
+
+Primitive 1
+
+Primitive 1
+
+Primitive 2
+
+Primitive 2
+
+Primitive 3
+
+Primitive 3
+
+Primitive 4
+
+Primitive 4
+
+Primitive 5
+
+Primitive 5
+
+Primitive 6
+
+Primitive 6
+
+« Previous
+Next »
+Found a problem with this page?
+Edit on GitHub
+Source on GitHub
+Report a problem with this content on GitHub
+Want to fix the problem yourself? See our Contribution guide.
+Last modified: Sep 23, 2021, by MDN contributors
+
+Change your language
+Select your preferred language
+English (US)
+ Change language
+Web Technologies
+Learn Web Development
+About MDN
+Feedback
+About
+MDN Web Docs Store
+Contact Us
+Firefox
+MDN
+MDN on Twitter
+MDN on Github
+Mozilla
+Mozilla on Twitter
+Mozilla on Instagram
+© 2005-2022 Mozilla and individual contributors. Content is available under these licenses.
+
+Terms
+Privacy
+Cookies
+`;
+
+      // turn string into array of single letters
+
+      const text = Array.from(
+        originalText
+          .split(" ")
+          .join("")
+          .toLocaleLowerCase()
+      );
+
+      // use filter to filter array of letters into only letters or numbers
+
+      function reducer(acc, item) {
+        // Reduce to how many times each letter and number occurs
+        console.log(acc[item]);
+        acc[item] ? (acc[item] += 1) : (acc[item] = 1);
+        console.log(acc);
+        console.log("---------------------");
+        return acc;
+      }
+
+      const result = text
+        .filter((letter) => {
+          return letter.match(/^[0-9a-zA-Z]+$/);
+        })
+        .reduce(reducer, {});
+
+      const sortedResult = Object.entries(result).sort((a, b) => {
+        return b[1] - a[1];
+      });
+
+      console.log(sortedResult);
+    </script>
+  </body>
+</html>
