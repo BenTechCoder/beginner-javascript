@@ -26,38 +26,37 @@ function restoreFromLocalStorage() {
   if (lsItems.length) {
     items.push(...lsItems);
   }
-  list.dispatchEvent(new CustomEvent('itemsUpdated'));
+  list.dispatchEvent(new CustomEvent("itemsUpdated"));
 }
 
 function displayItems() {
   const html = items
-    .map((item) => {
-      return `<li class = "shopping-item">
-    <input type="checkbox" value="${item.id}" ${item.complete ? 'checked' : ''}>
+    .map(
+      (item) => `<li class = "shopping-item">
+    <input type="checkbox" value="${item.id}" ${item.complete ? "checked" : ""}>
     <span class="itemName">${item.name}</span>
     <button value="${item.id}" aria-label="Remove ${item.name}">&times</button>
-    </li>`;
-    })
+    </li>`
+    )
     .join("");
   list.innerHTML = html;
 }
 
 function deleteItem(id) {
   console.log("Deleteing Item");
-  items = items.filter(item => item.id != id)
+  items = items.filter((item) => item.id != id);
   list.dispatchEvent(new CustomEvent("itemsUpdated"));
 }
 
 function markAsComplete(id) {
-  const itemRef =  items.find(item => item.id === id)
- itemRef.complete = !itemRef.complete;
- list.dispatchEvent(new CustomEvent('itemsUpdated'));
+  const itemRef = items.find((item) => item.id === id);
+  itemRef.complete = !itemRef.complete;
+  list.dispatchEvent(new CustomEvent("itemsUpdated"));
 }
 
 shppingForm.addEventListener("submit", handleSubmit);
 list.addEventListener("itemsUpdated", displayItems);
 list.addEventListener("itemsUpdated", mirrorToLocalStorage);
-
 
 list.addEventListener("click", (e) => {
   const id = parseInt(e.target.value);
@@ -65,7 +64,7 @@ list.addEventListener("click", (e) => {
     deleteItem(parseInt(id));
   }
   if (e.target.matches('input[type="checkbox"')) {
-    markAsComplete(id)
+    markAsComplete(id);
   }
 });
 restoreFromLocalStorage();

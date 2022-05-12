@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>APIs</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>APIs</title>
-  <link rel="stylesheet" href="../base.css">
-</head>
+  <body>
+    <p class="user"></p>
 
-<body>
-  <script>
+    <script>
+      const baseEndpoint = "https://api.github.com";
+      const usersEndpoint = `${baseEndpoint}/users`;
+      const userEl = document.querySelector(".user");
 
-  </script>
-</body>
+      // TODO: implement error handling on my own
+      async function displayUser(username) {
+        const response = await fetch(`${usersEndpoint}/${username}`);
+        const data = await response.json();
+        console.log(data);
+        console.log(data.blog);
+        console.log(data.name);
+        console.log(data.location);
+        userEl.textContent = `${data.name} - ${data.blog}`;
+      }
 
+      function handleError(error) {
+        console.log(`error below⬇️`);
+        console.log(error);
+      }
+
+      displayUser("bentechcoder").catch(handleError);
+    </script>
+  </body>
 </html>
