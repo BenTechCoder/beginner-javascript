@@ -50,7 +50,7 @@ const currencies = {
   EUR: 'Euro',
 };
 
-function genetateOptions(options) {
+function generateOptions(options) {
   return Object.entries(options)
     .map(function([currencyCode, currencyName]) {
       return `<option value="${currencyCode}">${currencyCode} - ${currencyName}</option>`;
@@ -102,7 +102,7 @@ async function handleInput(e) {
   toEl.textContent = formatCurrency(rawAmount, toSelect.value);
 }
 
-const optionsHTML = genetateOptions(currencies);
+const optionsHTML = generateOptions(currencies);
 
 fromSelect.innerHTML = optionsHTML;
 toSelect.innerHTML = optionsHTML;
